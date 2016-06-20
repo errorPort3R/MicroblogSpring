@@ -2,11 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MicroBlog</title>
+    <title>MicroBlog with Spring</title>
 </head>
 <body>
 
+{{^loggedIn}}
+<form action="/login" method="post">
+    <input type="text" name="user" placeholder="Enter your name" style="display: inline"/>
+    <button type="submit" style="display: inline">Login</button>
+</form>
+{{/loggedIn}}
 
+{{#loggedIn}}
+<form action="/add-message" method="post" style="display: inline">
+<input type="text" name="text" value="text" placeholder="Enter your message"/>
+    <button type="submit" style="display: inline">Submit</button>
+    </form>
+<form action="logout" method="post" style="display: inline">
+    <button type="submit" style="display: inline">Logout</button>
+</form>
+<br>
+Messages by {{name}}:
 
+{{#messages}}
+<ol>
+    <li><form action="/delete_message" method="delete">{{*}}
+    <input type="hidden" name="id" value="{{id}}"/>
+    </form></li>
+</ol>
+{{/messages}}
+{{/loggedIn}}
+</form>
 </body>
 </html>
