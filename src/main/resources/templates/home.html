@@ -6,32 +6,40 @@
 </head>
 <body>
 
-{{^loggedIn}}
+{{^user}}
 <form action="/login" method="post">
-    <input type="text" name="user" placeholder="Enter your name" style="display: inline"/>
+    <input type="text" name="username" placeholder="Enter your name" style="display: inline"/>
     <button type="submit" style="display: inline">Login</button>
 </form>
-{{/loggedIn}}
+{{/user}}
 
-{{#loggedIn}}
+
+
+{{#user}}
 <form action="/add-message" method="post" style="display: inline">
-<input type="text" name="text" value="text" placeholder="Enter your message"/>
+<input type="text" name="text" placeholder="Enter your message"/>
     <button type="submit" style="display: inline">Submit</button>
     </form>
-<form action="logout" method="post" style="display: inline">
+
+<form action="/logout" method="post" style="display: inline">
     <button type="submit" style="display: inline">Logout</button>
 </form>
 <br>
-Messages by {{name}}:
+Messages by {{.}}:
 
-{{#messages}}
+
 <ol>
-    <li><form action="/delete_message" method="delete">{{*}}
+    {{#messages}}
+    <li>
+        <form action="/delete-message" method="post" style="display: inline">{{text}}
     <input type="hidden" name="id" value="{{id}}"/>
-    </form></li>
+        <button type="submit" style="display: inline">Delete</button>
+    </form>
+    </li>
+    {{/messages}}
 </ol>
-{{/messages}}
-{{/loggedIn}}
+
+{{/user}}
 </form>
 </body>
 </html>

@@ -15,4 +15,10 @@ public class Message
         this.text = text;
         uniqueIdList++;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s",text);
+    }
 }

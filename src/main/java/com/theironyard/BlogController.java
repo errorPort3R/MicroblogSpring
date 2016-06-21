@@ -27,6 +27,7 @@ public class BlogController
         {
             user = (username);
         }
+        model.addAttribute("messages", messages);
         model.addAttribute("user", user);
         return "home";
     }
@@ -54,21 +55,17 @@ public class BlogController
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/delete-message", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/delete-message", method = RequestMethod.POST)
     public String delete(HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
-        for (Message message:messages)
+        for (int i=0;i<messages.size();i++)
         {
-            if (message.id == id)
+            if (messages.get(i).id == id)
             {
-                messages.remove(message);
+                messages.remove(i);
             }
         }
-
-
-
-
         return "redirect:/";
     }
 }
