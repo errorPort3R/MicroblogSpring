@@ -1,5 +1,6 @@
 package com.theironyard;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 @Controller
 public class BlogController
 {
-    ArrayList<Message> messages = new ArrayList<>();
+    @Autowired
+    MessageRepository messages;
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
@@ -27,16 +29,17 @@ public class BlogController
         {
             user = (username);
         }
-        model.addAttribute("messages", messages);
+        Iterable<Message> mess = messages.findAll();
+        model.addAttribute("messages", mess);
         model.addAttribute("user", user);
         return "home";
     }
 
     @RequestMapping(path = "/add-message", method = RequestMethod.POST)
-    public String addMessage(String username, HttpSession session, String text)
+    public String addMessage(HttpSession session, String text)
     {
         Message message = new Message(text);
-        messages.add(message);
+        messages.save(message);
         return "redirect:/";
     }
 
@@ -59,13 +62,16 @@ public class BlogController
     public String delete(HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
-        for (int i=0;i<messages.size();i++)
-        {
-            if (messages.get(i).id == id)
-            {
-                messages.remove(i);
-            }
-        }
+        messages.delete(id);
         return "redirect:/";
     }
+
+    @RequestMapping(path = "/edit-message", method = RequestMethod.POST)
+    public String editMessage(HttpSession session, String text, int id)
+    {
+        Message message = new Message(id, text);
+        messages.save(message);
+        return "redirect:/";
+    }
+
 }

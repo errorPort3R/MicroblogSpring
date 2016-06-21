@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>MicroBlog with Spring</title>
 </head>
 <body>
@@ -31,9 +32,16 @@ Messages by {{.}}:
 <ol>
     {{#messages}}
     <li>
-        <form action="/delete-message" method="post" style="display: inline">{{text}}
+        {{text}}
+        <form action="/delete-message" method="post" style="display: inline">
     <input type="hidden" name="id" value="{{id}}"/>
         <button type="submit" style="display: inline">Delete</button>
+    </form>
+
+    <form action="/edit-message" method="post" style="display: inline">
+        <input type="hidden" name="id" value="{{id}}"/>
+        <button type="submit" style="display: inline">Update</button>
+        <input type="text" name="text" placeholder="Update your message"/>
     </form>
     </li>
     {{/messages}}

@@ -1,19 +1,37 @@
 package com.theironyard;
 
+import javax.persistence.*;
+
 /**
  * Created by jeffryporter on 6/20/16.
  */
+
+@Entity
+@Table(name = "messages")
+
 public class Message
 {
+    @Id
+    @GeneratedValue
     int id;
+
+    @Column(nullable = false)
     String text;
-    static int uniqueIdList = 10110;
+
+
+    public Message()
+    {
+    }
 
     public Message(String text)
     {
-        id = uniqueIdList;
         this.text = text;
-        uniqueIdList++;
+    }
+
+    public Message(int id, String text)
+    {
+        this.id = id;
+        this.text = text;
     }
 
     @Override
