@@ -67,7 +67,7 @@ public class BlogController
     }
 
     @RequestMapping(path = "/edit-message", method = RequestMethod.POST)
-    public String editMessage(HttpSession session, String text, int id)
+    public String editMessage(String text, int id)
     {
         Message message = new Message(id, text);
         messages.save(message);
