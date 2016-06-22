@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by jeffryporter on 6/20/16.
@@ -29,7 +30,13 @@ public class BlogController
         {
             user = (username);
         }
-        Iterable<Message> mess = messages.findAll();
+        Iterable<Message> messIter = messages.findAll();
+        ArrayList<Message> mess = new ArrayList<>();
+        for (Message message : messIter)
+        {
+            mess.add(message);
+        }
+        Collections.sort(mess);
         model.addAttribute("messages", mess);
         model.addAttribute("user", user);
         return "home";
